@@ -6,6 +6,9 @@ module.exports = {
         weddingPink: '#fdedec',
         weddingPeach: '#fadbd8',
       },
+      screens:{
+        xs: '300px',
+      }
     },
   },
   plugins: [],
