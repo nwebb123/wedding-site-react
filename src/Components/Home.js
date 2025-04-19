@@ -2,9 +2,11 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <div className="bg-weddingPink min-h-screen flex items-center justify-center text-center">
-      {/*  */}
-      <div className="max-w-md ">
+    <div
+      className="min-h-screen flex items-center justify-center text-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/imgs/aaron-burden-FHWgqOniOSY-unsplash.jpg')" }}
+    >
+      <div className="max-w-md bg-white bg-opacity-70 p-6 rounded-xl shadow-lg">
         <img
           src="/imgs/propose_4.jpeg"
           alt="Wedding Couple"

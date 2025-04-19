@@ -1,12 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const RSVP = () => {
-  const [name, setName] = useState('');
-  const [guests, setGuests] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Thank you for RSVPing, ${name}!`);
+
+    //Sanitize input before sending request to api
+    //function SanitizeText(string text){
+    //
+    //}
+
+    try {
+      //const response = await fetch(`${process.env.RSVP_API_URL}`);
+      //const response = await fetch(`${process.env.REACT_APP_API_URL}/search?${firstName}`);
+      // const response = await fetch(
+      //   `${process.env.RSVP_API_URL}/search?firstName=${firstName}&lastName=${lastName}`
+      // );
+      const response = await fetch(
+        `https://localhost:7148/api/user/search?firstName=Alex&lastName=Webb`
+      );
+
+      if (!response.ok) {
+        throw new Error("User not found");
+      }
+
+      const data = await response.json(); // ✅ read once   
+      console.log("Parsed JSON:", data);
+
+    } catch (error) {
+      console.error(error);
+      alert("Could not find user. Please check your name and try again.");
+    }
+
   };
 
   return (
@@ -20,17 +47,18 @@ const RSVP = () => {
           Your Name:
           <input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             className="w-full mt-1 p-2 border rounded"
           />
         </label>
-        <label className="block mb-4">
-          Number of Guests:
+
+        <label className="block mb-2">
+          Your Name:
           <input
-            type="number"
-            value={guests}
-            onChange={(e) => setGuests(e.target.value)}
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             className="w-full mt-1 p-2 border rounded"
           />
         </label>
