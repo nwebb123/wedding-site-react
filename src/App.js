@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './Components/Home';
+import RSVP from './Components/RSVP';
+import GiftRegistry from './Components/GiftRegistry';
+import HotelBlock from './Components/HotelBlock';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <nav className="bg-white shadow p-4 flex justify-center space-x-4">
+        <Link to="/" className="text-black font-bold">Home</Link>
+        <Link to="/rsvp" className="text-black font-bold">RSVP</Link>
+        <Link to="/registry" className="text-black font-bold">Gift Registry</Link>
+        <Link to="/hotels" className="text-black font-bold">Hotel Block</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rsvp" element={<RSVP />} />
+        <Route path="/registry" element={<GiftRegistry />} />
+        <Route path="/hotels" element={<HotelBlock />} />
+      </Routes>
+    </Router>
   );
 }
 
