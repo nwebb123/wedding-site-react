@@ -18,19 +18,15 @@ const RSVP = () => {
   const SubmitName = async (e) => {
     e.preventDefault();
 
-    //Sanitize input before sending request to api
+    //TODO:Sanitize input before sending request to api
     //function SanitizeText(string text){
     //
     //}
 
-    try {
-      //const response = await fetch(`${process.env.RSVP_API_URL}`);
-      //const response = await fetch(`${process.env.REACT_APP_API_URL}/search?${firstName}`);
-      // const response = await fetch(
-      //   `${process.env.RSVP_API_URL}/search?firstName=${firstName}&lastName=${lastName}`
-      // );
+    try {   
+      //TODO: Move to env variable
       const response = await fetch(
-        `https://localhost:7148/api/user/search?firstName=${firstName}&lastName=${lastName}`
+        `${process.env.REACT_APP_RSVP_API_URL}/search?firstName=${firstName}&lastName=${lastName}`
       );
 
       if (!response.ok) {
@@ -82,7 +78,8 @@ const RSVP = () => {
     };
 
     try {  
-      const response = await fetch("https://localhost:7148/api/user/submit", {
+      //TODO: Move to env variable
+      const response = await fetch(`${process.env.REACT_APP_RSVP_API_URL}/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
