@@ -1,19 +1,44 @@
 import React, { use, useState } from "react";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 
 const RSVP = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [plusOneFirstName, setPlusOneFirstName] = useState("");
   const [plusOneLastName, setPlusOneLastName] = useState("");
-  const [hasSubmittedRSVPForm] = useState(null);
-  const [showExistingUserForm, setShowExistingUserForm] = useState(false);
+  const [hasSubmittedRSVPForm, setHasSubmittedRSVPForm] = useState(false);
+  const [showRSVPForm, setShowRSVPForm] = useState(false);
   const [hasPlusOne, setHasPlusOne] = useState(null);
   const [isAttending, setIsAttending] = useState(null);
-  const [dietaryRestrictions, setDietaryRestrictions] = useState(
-    "No Wanch Dressing pwease, I think it's yucky and gwoss and I don't like it on my food."
-  );
-  const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] =
-    useState(null);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState(null);
+  const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] = useState(null);
+
+  const [inputValue, setInputValue] = useState('')
+  const showSwal_TEMPLATE = () => {
+    withReactContent(Swal).fire({
+      title: <i>Input something</i>,
+      input: 'text',
+      inputValue,
+      preConfirm: () => {
+        setInputValue(Swal.getInput()?.value || '')
+      },
+    })
+  }
+
+  const showErrorMessage = () => {
+    withReactContent(Swal).fire({
+      title: <h2>Hmm, having trouble finding you...<br/> Maybe try the full or shortened version of your first name?</h2>
+    })
+  }
+
+  const showSuccessMessage = (titleParam) => {
+    withReactContent(Swal).fire({
+      title: <h1>{titleParam}</h1>
+    })
+  }
+
 
   const SubmitName = async (e) => {
     e.preventDefault();
@@ -33,18 +58,23 @@ const RSVP = () => {
         throw new Error("User not found");
       }
 
-      const data = await response.json(); // ✅ read once
+      const data = await response.json();
       console.log("Parsed JSON:", data);
 
       //Check if user has already submitted their form
       if (data.hasSubmittedRSVPForm) {
-        alert("Error: This user has already submitted their RSVP");
+        //alert("Error: This user has already submitted their RSVP");
+        //display a message and picture to user thanking them for their RSVP
+        showSuccessMessage("Your RSVP has already been received. If you have any questions please reach out to the gride or groom.");
+        setHasSubmittedRSVPForm(true)
       } else {
-        setShowExistingUserForm(true);
+        setShowRSVPForm(true);
       }
     } catch (error) {
       console.error(error);
-      alert("Could not find user. Please check your name and try again.");
+      //alert("Could not find user. Please check your name and try again.");
+      //Show error component on screen
+      showErrorMessage();
     }
   };
 
@@ -78,7 +108,6 @@ const RSVP = () => {
     };
 
     try {  
-      //TODO: Move to env variable
       const response = await fetch(`${process.env.REACT_APP_RSVP_API_URL}/submit`, {
         method: "POST",
         headers: {
@@ -92,7 +121,9 @@ const RSVP = () => {
         throw new Error(errorMsg);
       }
 
-      alert("RSVP submitted successfully!");
+      //alert("RSVP submitted successfully!");
+      showSuccessMessage("RSVP submitted successfully!");
+      setHasSubmittedRSVPForm(true)
       // Optionally reset the form or redirect
     } catch (error) {
       console.error(error);
@@ -101,10 +132,13 @@ const RSVP = () => {
   };
 
   return (
+
     <div className="bg-weddingPeach min-h-screen p-4">
       <h2 className="text-2xl font-bold text-center mb-4">RSVP</h2>
       {/* Check Name form */}
-      {!showExistingUserForm && (
+      {!showRSVPForm && !hasSubmittedRSVPForm && (
+
+        <>   
         <form
           onSubmit={SubmitName}
           className="max-w-md mx-auto bg-white p-4 rounded shadow"
@@ -135,9 +169,16 @@ const RSVP = () => {
             Submit
           </button>
         </form>
+
+        <div></div>
+        </>
+     
       )}
 
-      {showExistingUserForm && (
+
+
+
+      {showRSVPForm && !hasSubmittedRSVPForm && (
         <form
           id="existingUserForm"
           onSubmit={SubmitRSVP}
@@ -280,6 +321,18 @@ const RSVP = () => {
           </div>
         </form>
       )}
+
+      {hasSubmittedRSVPForm && (
+
+        <div className="border-2 border-black text-center">
+          <h2 className="m-2 p-2 text-2xl">Thanks for RSVPing!</h2>
+          <img className='mx-auto size-1/2' src='/imgs/ai_proposal.png' alt="Nick and Emily proposal photo in the style of Studio Ghibli" />
+        </div>
+
+      )}
+
+
+      
     </div>
   );
 };
