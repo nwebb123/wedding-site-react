@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { SanitizeText } from "../Utils/SanitizeText";
@@ -16,17 +16,17 @@ const RSVP = () => {
   const [dietaryRestrictions, setDietaryRestrictions] = useState(null);
   const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] = useState(null);
 
-  const [inputValue, setInputValue] = useState("");
-  const showSwal_TEMPLATE = () => {
-    withReactContent(Swal).fire({
-      title: <i>Input something</i>,
-      input: "text",
-      inputValue,
-      preConfirm: () => {
-        setInputValue(Swal.getInput()?.value || "");
-      },
-    });
-  };
+  // const [inputValue, setInputValue] = useState("");
+  // const showSwal_TEMPLATE = () => {
+  //   withReactContent(Swal).fire({
+  //     title: <i>Input something</i>,
+  //     input: "text",
+  //     inputValue,
+  //     preConfirm: () => {
+  //       setInputValue(Swal.getInput()?.value || "");
+  //     },
+  //   });
+  // };
 
   const showErrorMessage = () => {
     withReactContent(Swal).fire({
