@@ -1,9 +1,10 @@
 import React, { use, useState } from "react";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { SanitizeText } from "../Utils/SanitizeText";
 
 const RSVP = () => {
+  
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [plusOneFirstName, setPlusOneFirstName] = useState("");
@@ -15,72 +16,78 @@ const RSVP = () => {
   const [dietaryRestrictions, setDietaryRestrictions] = useState(null);
   const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] = useState(null);
 
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState("");
   const showSwal_TEMPLATE = () => {
     withReactContent(Swal).fire({
       title: <i>Input something</i>,
-      input: 'text',
+      input: "text",
       inputValue,
       preConfirm: () => {
-        setInputValue(Swal.getInput()?.value || '')
+        setInputValue(Swal.getInput()?.value || "");
       },
-    })
-  }
+    });
+  };
 
   const showErrorMessage = () => {
     withReactContent(Swal).fire({
-      title: <h2>Hmm, having trouble finding you...<br/> Maybe try the full or shortened version of your first name?</h2>
-    })
-  }
+      title: (
+        <h2>
+          Hmm, having trouble finding you...
+          <br /> Maybe try the full or shortened version of your first name?
+        </h2>
+      ),
+    });
+  };
 
   const showSuccessMessage = (titleParam) => {
     withReactContent(Swal).fire({
-      title: <h1>{titleParam}</h1>
-    })
-  }
+      title: <h1>{titleParam}</h1>,
+    });
+  };
 
-
+  //Check with api to see if user is eligible to register
   const SubmitName = async (e) => {
     e.preventDefault();
 
-    //TODO:Sanitize input before sending request to api
-    //function SanitizeText(string text){
-    //
-    //}
+    let sanitizedText = SanitizeText(firstName, lastName);
+    console.log(sanitizedText);
 
-    try {   
-      //TODO: Move to env variable
-      const response = await fetch(
-        `${process.env.REACT_APP_RSVP_API_URL}/search?firstName=${firstName}&lastName=${lastName}`
-      );
+    if (sanitizedText.firstName !== "" && sanitizedText.lastName !== "") {
+      try {
+        
+        //put api url inside .env for security
+        const response = await fetch(
+          `${process.env.REACT_APP_RSVP_API_URL}/search?firstName=${firstName}&lastName=${lastName}`
+        );
 
-      if (!response.ok) {
-        throw new Error("User not found");
+        if (!response.ok) {
+          throw new Error("User not found");
+        }
+
+        const data = await response.json();
+        console.log("Parsed JSON:", data);
+
+        //Check if user has already submitted their form
+        if (data.hasSubmittedRSVPForm) {
+          showSuccessMessage(
+            "Your RSVP has already been received. If you have any questions please reach out to the gride or groom."
+          );
+          setHasSubmittedRSVPForm(true);
+        } else {
+          setShowRSVPForm(true);
+        }
+      } catch (error) {
+        console.error(error);       
+        showErrorMessage();
       }
-
-      const data = await response.json();
-      console.log("Parsed JSON:", data);
-
-      //Check if user has already submitted their form
-      if (data.hasSubmittedRSVPForm) {
-        //alert("Error: This user has already submitted their RSVP");
-        //display a message and picture to user thanking them for their RSVP
-        showSuccessMessage("Your RSVP has already been received. If you have any questions please reach out to the gride or groom.");
-        setHasSubmittedRSVPForm(true)
-      } else {
-        setShowRSVPForm(true);
-      }
-    } catch (error) {
-      console.error(error);
-      //alert("Could not find user. Please check your name and try again.");
-      //Show error component on screen
-      showErrorMessage();
     }
   };
 
+  //Submit RSVP to api, which then updates DB through service class
   const SubmitRSVP = async (e) => {
     e.preventDefault();
 
+    //Set userDtos to contain a dto for the invited user. Condition below will also add an additional dto for a plus one
     const userDtos = [
       {
         firstName,
@@ -88,7 +95,7 @@ const RSVP = () => {
         isAttending,
         dietaryRestrictions,
         isPlusOne: false,
-        hasPlusOne: true
+        hasPlusOne: true,
       },
     ];
 
@@ -99,7 +106,7 @@ const RSVP = () => {
         isAttending: true,
         dietaryRestrictions: plusOneDietaryRestrictions,
         isPlusOne: true,
-        hasPlusOne: false
+        hasPlusOne: false,
       });
     }
 
@@ -107,24 +114,26 @@ const RSVP = () => {
       dtos: userDtos,
     };
 
-    try {  
-      const response = await fetch(`${process.env.REACT_APP_RSVP_API_URL}/submit`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_RSVP_API_URL}/submit`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (!response.ok) {
         const errorMsg = await response.text();
         throw new Error(errorMsg);
       }
 
-      //alert("RSVP submitted successfully!");
       showSuccessMessage("RSVP submitted successfully!");
-      setHasSubmittedRSVPForm(true)
-      // Optionally reset the form or redirect
+      setHasSubmittedRSVPForm(true);
+
     } catch (error) {
       console.error(error);
       alert("Could not submit RSVP. " + error.message);
@@ -132,52 +141,48 @@ const RSVP = () => {
   };
 
   return (
-
     <div className="bg-weddingPeach min-h-screen p-4">
       <h2 className="text-2xl font-bold text-center mb-4">RSVP</h2>
-      {/* Check Name form */}
+      
+      {/* Check Name of user before allowing them to RSVP */}
       {!showRSVPForm && !hasSubmittedRSVPForm && (
-
-        <>   
-        <form
-          onSubmit={SubmitName}
-          className="max-w-md mx-auto bg-white p-4 rounded shadow"
-        >
-          <label className="block mb-2">
-            <h4 className="pl-1">First Name:</h4>
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full mt-1 p-2 border-2 rounded"
-            />
-          </label>
-
-          <label className="block mb-2">
-            <h4 className="pl-1">Last Name:</h4>
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="w-full mt-1 p-2 border-2 rounded"
-            />
-          </label>
-          <button
-            type="submit"
-            className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-600"
+        <>
+          <form
+            onSubmit={SubmitName}
+            className="max-w-md mx-auto bg-white p-4 rounded shadow"
           >
-            Submit
-          </button>
-        </form>
+            <label className="block mb-2">
+              <h4 className="pl-1">First Name:</h4>
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="w-full mt-1 p-2 border-2 rounded"
+              />
+            </label>
 
-        <div></div>
+            <label className="block mb-2">
+              <h4 className="pl-1">Last Name:</h4>
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="w-full mt-1 p-2 border-2 rounded"
+              />
+            </label>
+            <button
+              type="submit"
+              className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-600"
+            >
+              Submit
+            </button>
+          </form>
+
+          <div></div>
         </>
-     
       )}
 
-
-
-
+      {/* If user is recognized after inputting first and last name, display RSVP form*/}
       {showRSVPForm && !hasSubmittedRSVPForm && (
         <form
           id="existingUserForm"
@@ -322,17 +327,17 @@ const RSVP = () => {
         </form>
       )}
 
+      {/* If user has already submitted their form, show hasSubmitted View */}
       {hasSubmittedRSVPForm && (
-
         <div className="border-2 border-black text-center">
           <h2 className="m-2 p-2 text-2xl">Thanks for RSVPing!</h2>
-          <img className='mx-auto size-1/2' src='/imgs/ai_proposal.png' alt="Nick and Emily proposal photo in the style of Studio Ghibli" />
+          <img
+            className="mx-auto size-1/2"
+            src="/imgs/ai_proposal.png"
+            alt="Nick and Emily proposal in the style of Studio Ghibli"
+          />
         </div>
-
       )}
-
-
-      
     </div>
   );
 };
