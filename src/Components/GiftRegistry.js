@@ -2,7 +2,7 @@ import React from 'react';
 
 const GiftRegistry = () => {
   return (
-    <div className="min-h-screen p-4">
+    <div className="bg-weddingPeach min-h-screen p-4">
       <h2 className="text-2xl font-bold text-center mb-4">Gift Registry</h2>
       <div className="max-w-md mx-auto">
         <p className="text-center mb-4">
@@ -12,7 +12,7 @@ const GiftRegistry = () => {
           href="https://www.amazon.com/your-registry-link"
           target="_blank"
           rel="noopener noreferrer"
-          className="block text-center bg-weddingPink text-white py-2 rounded shadow hover:bg-pink-600"
+          className="block text-center bg-pink-600 text-white py-2 rounded shadow hover:bg-pink-500"
         >
           Amazon Wishlist
         </a>

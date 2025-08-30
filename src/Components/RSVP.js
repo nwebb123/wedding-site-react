@@ -17,6 +17,7 @@ const RSVP = () => {
   const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] = useState(null);
 
   // const [inputValue, setInputValue] = useState("");
+
   // const showSwal_TEMPLATE = () => {
   //   withReactContent(Swal).fire({
   //     title: <i>Input something</i>,
