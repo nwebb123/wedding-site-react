@@ -9,15 +9,15 @@ const GiftRegistry = () => {
           View our registry:
         </p>
         <a
-          href="https://www.amazon.com/your-registry-link"
+          href="https://www.amazon.com/wedding/registry/1L70VWN7ZOF7P"
           target="_blank"
           rel="noopener noreferrer"
           className="block text-center bg-pink-600 text-white py-2 rounded shadow hover:bg-pink-500"
         >
           Amazon Wishlist
         </a>
-        <p className="text-center mt-4">or</p>
-        <p className="text-center mt-2">Donate to our Venmo: @your-venmo</p>
+        {/* <p className="text-center mt-4">or</p>
+        <p className="text-center mt-2">Donate to our Venmo: @your-venmo</p> */}
       </div>
     </div>
   );
