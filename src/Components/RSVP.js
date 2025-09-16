@@ -4,7 +4,6 @@ import withReactContent from "sweetalert2-react-content";
 import { SanitizeText } from "../Utils/SanitizeText";
 
 const RSVP = () => {
-  
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [plusOneFirstName, setPlusOneFirstName] = useState("");
@@ -14,7 +13,10 @@ const RSVP = () => {
   const [hasPlusOne, setHasPlusOne] = useState(null);
   const [isAttending, setIsAttending] = useState(null);
   const [dietaryRestrictions, setDietaryRestrictions] = useState(null);
-  const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] = useState(null);
+  const [plusOneDietaryRestrictions, setPlusOneDietaryRestrictions] =
+    useState(null);
+
+  const [loading, setLoading] = useState(false);
 
   // const [inputValue, setInputValue] = useState("");
 
@@ -54,8 +56,8 @@ const RSVP = () => {
     console.log(sanitizedText);
 
     if (sanitizedText.firstName !== "" && sanitizedText.lastName !== "") {
+      setLoading(true); // Start loading
       try {
-        
         //put api url inside .env for security
         const response = await fetch(
           `${process.env.REACT_APP_RSVP_API_URL}/search?firstName=${firstName}&lastName=${lastName}`
@@ -78,8 +80,10 @@ const RSVP = () => {
           setShowRSVPForm(true);
         }
       } catch (error) {
-        console.error(error);       
+        console.error(error);
         showErrorMessage();
+      } finally {
+        setLoading(false); // Stop loading in both success and error cases
       }
     }
   };
@@ -134,7 +138,6 @@ const RSVP = () => {
 
       showSuccessMessage("RSVP submitted successfully!");
       setHasSubmittedRSVPForm(true);
-
     } catch (error) {
       console.error(error);
       alert("Could not submit RSVP. " + error.message);
@@ -144,7 +147,7 @@ const RSVP = () => {
   return (
     <div className="bg-weddingPeach min-h-screen p-4">
       <h2 className="text-2xl font-bold text-center mb-4">RSVP</h2>
-      
+
       {/* Check Name of user before allowing them to RSVP */}
       {!showRSVPForm && !hasSubmittedRSVPForm && (
         <>
@@ -175,9 +178,15 @@ const RSVP = () => {
               type="submit"
               className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-600"
             >
-              Submit
+              {loading ? "Loading..." : "Submit"}
             </button>
           </form>
+
+          {loading && (
+            <div className="mt-4 flex justify-center">
+              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
 
           <div></div>
         </>
@@ -325,6 +334,13 @@ const RSVP = () => {
               Submit
             </button>
           </div>
+
+           {loading && (
+            <div className="mt-4 flex justify-center">
+              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
+          
         </form>
       )}
 
