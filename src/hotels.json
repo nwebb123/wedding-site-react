@@ -4,15 +4,16 @@
     "name": "Holiday Inn Express & Suites Troy",
     "address": "400 Stephenson Highway",
     "city": "Troy, MI 48083",
-    "phone": "(123) 456-7890",
-    "url": "https://www.hiexpress.com/redirect?path=rates&brandCode=EX&localeCode=en&regionCode=1&hotelCode=DTTOM&checkInDate=19&checkInMonthYear=022026&checkOutDate=21&checkOutMonthYear=022026&_PMID=99801505&GPC=ENW&cn=no&viewfullsite=true"
+    "phone": "(248) 583-1900",
+    "url": "https://www.hiexpress.com/redirect?path=rates&brandCode=EX&localeCode=en&regionCode=1&hotelCode=DTTOM&checkInDate=19&checkInMonthYear=022026&checkOutDate=21&checkOutMonthYear=022026&_PMID=99801505&GPC=ENW&cn=no&viewfullsite=true",
+    "group_code" : "ENW"
   },
   {
     "id": 2,
     "name": "Embassy Suites by Hilton",
     "address": "850 Tower Dr",
     "city": "Troy, MI 48098",
-    "phone": "(123) 456-7890",
+    "phone": "(248) 879-7500",
     "url": "https://www.hilton.com/en/book/reservation/rooms/?ctyhocn=DTTTRES&arrivalDate=2026-03-19&departureDate=2026-03-21&groupCode=CES90K&room1NumAdults=1&cid=OM%2CWW%2CHILTONLINK%2CEN%2CDirectLink"
   }
 ]
