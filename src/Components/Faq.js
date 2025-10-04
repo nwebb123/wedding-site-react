@@ -1,54 +1,65 @@
-import React from "react";
-import hotelData from "../hotels.json";
+import React, { useState } from "react";
+import faqData from "../FaqData.json";
 
 const Faq = () => {
-  return (
-    <div className="bg-weddingPeach min-h-screen p-4 text-center">
-      <h2 className="text-2xl font-bold text-center mb-4">Hotel Block</h2>
-      <ul className="max-w-md mx-auto bg-white p-4 rounded shadow">
-        {hotelData.map((hotel) => (
-          <div
-            key={hotel.id}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block group"
-          >
-            <li
-              className="mb-4 border border-black p-3 m-1 shadow rounded-lg 
-                         transition-all duration-300 ease-in-out 
-                         hover:bg-gray-100 hover:shadow-lg cursor-pointer"
-            >
-              <h3 className="font-bold group-hover:underline">{hotel.name}</h3>
-              <p>{hotel.address}</p>
-              <p>{hotel.city}</p>
-              <p>{hotel.phone}</p>
-              
-              {hotel["group_code"] && (
-                <>
-                  <p>Group Code: {hotel.group_code}</p>
-                </>
-              )}
+  const [openIndex, setOpenIndex] = useState(null);
 
-              <a 
-                target="_blank"
-                rel="noopener noreferrer"
-                href={hotel.url}
-              >
-                <button              
-                  className="w-3/5 m-2 py-2  bg-pink-600 text-white rounded hover:bg-pink-600"
+  const toggleFaq = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <div className="bg-weddingPeach min-h-screen p-6">
+      <h2 className="text-2xl font-bold text-center mb-4">FAQ</h2>
+      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow divide-y divide-stone-200">
+        {faqData.map((faq, index) => (
+          <div key={faq.id} className="group">
+            {/* Question row */}
+           <button
+                onClick={() => toggleFaq(index)}
+                className="w-full px-4 py-5 rounded-lg flex items-center focus:outline-none"
                 >
-                  Book
+                {/* Centered question */}
+                <span className="flex-1 text-center text-lg font-medium">
+                    {faq.question}
+                </span>
+
+                {/* Arrow icon */}
+                <svg
+                    className={`h-5 w-5 transform transition-transform duration-300 ${
+                    openIndex === index ? "rotate-180" : "rotate-0"
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                    d="M6 9l6 6 6-6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    />
+                </svg>
                 </button>
-              </a>
-            </li>
+
+            {/* Answer */}
+            <div
+              className={`overflow-hidden transition-all duration-300 px-4 ${
+                openIndex === index
+                  ? "max-h-40 opacity-100 pb-5"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <p className="text-stone-700 text-center m-2 p-3">{faq.answer}</p>
+            </div>
           </div>
         ))}
+      </div>
 
-        <h4 className="pb-3">
-          The final day for guests to book at your discounted group rate is Feb
-          26, 2026.
-        </h4>
-      </ul>
+      <p className="text-center mt-6 text-stone-700 font-medium">
+        The final day for guests to book at your discounted group rate is{" "}
+        <span className="font-bold">Feb 26, 2026</span>.
+      </p>
     </div>
   );
 };

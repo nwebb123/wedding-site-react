@@ -15,8 +15,8 @@ const Home = () => {
         <h1 className="mt-4 text-3xl font-bold text-gray-800">
           Emily & Nick
         </h1>
-        <p className="text-xl text-gray-600 mt-2">Date: March 20, 2026</p>
-        <p className="text-xl text-gray-600 mt-1">Location: San Marino Club</p>
+        <p className="text-xl text-gray-600 mt-2"><span className="font-bold">Date: </span>March 20, 2026</p>
+        <p className="text-xl text-gray-600 mt-1"><span className="font-bold">Location: </span>San Marino Club in Troy, MI</p>
       </div>
     </div>
   );

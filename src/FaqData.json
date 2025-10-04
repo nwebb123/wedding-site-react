@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "question": "What time should I arrive at the ceremony?",
+    "answer": "The ceremony begins at 4:30 pm" 
+  },
+  {
+    "id": 2,
+    "question": "Is there parking available at the wedding venue?",
+    "answer": "Yes! There is a large parking lot to accommodate guests." 
+  },
+  {
+    "id": 3,
+    "question": "Will there be transportation from the hotels to the venue and back?",
+    "answer": "Unfortunately there will be no shuttles." 
+  },
+  {
+    "id": 4,
+    "question": "Is there a dress code?",
+    "answer": "No." 
+  },
+  {
+    "id": 5,
+    "question": "Can I bring a plus one?",
+    "answer": "Unfortunately we cannot accommodate additional guests not indicated on your invitation. Rest assured, we are arranging seating with care to ensure you're surrounded by friends." 
+  },
+  {
+    "id": 6,
+    "question": "Are kids welcome?",
+    "answer": "While we love little ones, we kindly request a child-free wedding." 
+  },
+  {
+    "id": 7,
+    "question": "I have a food allergy, can I make a special request?",
+    "answer": "Yes! When you RSVP, you will be asked if you have any dietary restrictions." 
+  },
+  {
+    "id": 8,
+    "question": "Who can I contact with any additional questions?",
+    "answer": "Please reach out to Emily Turner at (734) 802-8197." 
+  }
+
+]
