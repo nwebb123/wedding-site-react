@@ -1,6 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const Home = () => {
+  
+  useEffect(() => {
+    const lastPing = localStorage.getItem("apiPingTime");
+    const now = Date.now();
+    const fifteenMinutes = 15 * 60 * 1000;
+
+    // Only ping if 15 minutes have passed or never pinged before
+    if (!lastPing || now - lastPing > fifteenMinutes) {
+      fetch(`${process.env.REACT_APP_API_URL}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("API warmed up:", data);
+          localStorage.setItem("apiPingTime", now);
+        })
+        .catch((err) => console.error("Error warming API:", err));
+    }
+  }, []);
+
   return (
     <div
       className="min-h-screen flex items-center justify-center text-center bg-cover bg-center"
