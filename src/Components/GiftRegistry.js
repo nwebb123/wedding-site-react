@@ -15,9 +15,7 @@ const GiftRegistry = () => {
           className="block text-center bg-pink-600 text-white py-2 rounded shadow hover:bg-pink-500"
         >
           Amazon Wishlist
-        </a>
-        {/* <p className="text-center mt-4">or</p>
-        <p className="text-center mt-2">Donate to our Venmo: @your-venmo</p> */}
+        </a>       
       </div>
     </div>
   );

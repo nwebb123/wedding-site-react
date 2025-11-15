@@ -33,6 +33,7 @@ const RSVP = () => {
 
   const showErrorMessage = () => {
     withReactContent(Swal).fire({
+      icon: "question",
       title: (
         <h2>
           Hmm, having trouble finding you...
@@ -44,6 +45,7 @@ const RSVP = () => {
 
   const showSuccessMessage = (titleParam) => {
     withReactContent(Swal).fire({
+      icon: "success",
       title: <h1>{titleParam}</h1>,
     });
   };
@@ -73,10 +75,12 @@ const RSVP = () => {
         //Check if user has already submitted their form
         if (data.hasSubmittedRSVPForm) {
           showSuccessMessage(
-            "Your RSVP has already been received. If you have any questions please reach out to the gride or groom."
+            "Your RSVP has already been received. If you have any questions please reach out to the bride or groom."
           );
           setHasSubmittedRSVPForm(true);
         } else {
+          setFirstName(data.firstName);
+          setLastName(data.lastName);
           setShowRSVPForm(true);
         }
       } catch (error) {
@@ -91,6 +95,26 @@ const RSVP = () => {
   //Submit RSVP to api, which then updates DB through service class
   const SubmitRSVP = async (e) => {
     e.preventDefault();
+
+    //TODO: Move this validation logic to a function
+    if (isAttending == null) {
+      withReactContent(Swal).fire({
+        icon: "warning",
+        title: "Please select whether you're attending or not",
+        confirmButtonColor: "#d33",
+      });
+      return;
+    } else if (
+      hasPlusOne &&
+      (plusOneFirstName.trim() === "" || plusOneLastName.trim() === "")
+    ) {
+      withReactContent(Swal).fire({
+        icon: "warning",
+        title: "Please enter a first and last name for your guest",
+        confirmButtonColor: "#d33",
+      });
+      return;
+    }
 
     //Set userDtos to contain a dto for the invited user. Condition below will also add an additional dto for a plus one
     const userDtos = [
@@ -208,7 +232,8 @@ const RSVP = () => {
               <input
                 type="text"
                 value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                readOnly
+                //onChange={(e) => setFirstName(e.target.value)}
                 className="w-full mt-1 p-2 border-2 rounded"
               />
             </label>
@@ -218,7 +243,8 @@ const RSVP = () => {
               <input
                 type="text"
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                readOnly
+                //onChange={(e) => setLastName(e.target.value)}
                 className="w-full mt-1 p-2 border-2 rounded"
               />
             </label>
@@ -335,21 +361,22 @@ const RSVP = () => {
             </button>
           </div>
 
-           {loading && (
+          {loading && (
             <div className="mt-4 flex justify-center">
               <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
-          
         </form>
       )}
 
       {/* If user has already submitted their form, show hasSubmitted View */}
       {hasSubmittedRSVPForm && (
-        <div className="border-2 border-black text-center">
-          <h2 className="m-2 p-2 text-2xl">Thanks for RSVPing!</h2>
+        <div className="text-center max-w-xl mx-auto p-4 sm:p-6 mt-6">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-800">
+            Thanks for RSVPing!
+          </h2>
           <img
-            className="mx-auto size-1/2"
+            className="mx-auto w-full max-w-md rounded-xl object-cover"
             src="/imgs/ai_proposal.png"
             alt="Nick and Emily proposal in the style of Studio Ghibli"
           />

@@ -45,7 +45,7 @@ const HotelBlock = () => {
         ))}
 
         <h4 className="pb-3">
-          The final day for guests to book at your discounted group rate is Feb
+          The final day for guests to book at the discounted group rate is February
           26, 2026.
         </h4>
       </ul>

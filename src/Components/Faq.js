@@ -54,12 +54,7 @@ const Faq = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      <p className="text-center mt-6 text-stone-700 font-medium">
-        The final day for guests to book at your discounted group rate is{" "}
-        <span className="font-bold">Feb 26, 2026</span>.
-      </p>
+      </div>     
     </div>
   );
 };
