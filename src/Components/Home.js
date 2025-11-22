@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center text-center bg-cover bg-center"
+      className="min-h-screen flex items-center justify-center text-center bg-cover bg-center pt-20"
       style={{ backgroundImage: "url('/imgs/peter-bucks-hY4TcvzyPlw-unsplash.jpg')" }}
     >
       <div className="max-w-md bg-white bg-opacity-70 p-6 rounded-xl shadow-lg">

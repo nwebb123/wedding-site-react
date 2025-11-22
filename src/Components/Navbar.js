@@ -5,7 +5,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow p-4">
+    <nav className="bg-white shadow p-4 z-50 relative">
       <div className="flex justify-between items-center max-w-6xl mx-auto">
         {/* Logo / Brand */}
         <Link to="/" className="block md:hidden text-xl font-bold text-black mx-auto">
