@@ -16,9 +16,6 @@ const GiftRegistry = () => {
         >
           Amazon Wishlist
         </a>
-        <h5 class="text-center m-4" >
-          If you would like to send the gift directly to us you can do so at <span class="underline">48885 Bemis Rd, Sumpter Township MI 48111</span>
-        </h5>       
       </div>
     </div>
   );
