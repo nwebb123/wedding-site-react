@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Wedding RSVP Application - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Frontend application for a wedding site, specifically mine! Site includes general wedding day information as well as RSVP system that allows guests to search for their invitation, submit RSVP responses, manage plus-one information, and provide dietary restrictions.
 
-## Available Scripts
+#### Live site here:
+https://emilyandnick.netlify.app
 
-In the project directory, you can run:
+## Purpose
 
-### `npm start`
+The purpose of this application is to provide a simple and user-friendly experience for wedding guests to submit their RSVP information online. Guests can quickly locate their invitation, confirm attendance, update guest details, and submit dietary preferences without requiring paper RSVP cards.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This project was built using React and follows a mobile-first, responsive design approach to ensure a seamless experience across desktop, tablet, and mobile devices.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+* React
+* JavaScript
+* CSS
+* ASP.NET Core Web API
+* Azure App Service
+* Netlify
+* GitHub Actions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+* Guest invitation lookup
+* RSVP submission and updates
+* Plus-one management
+* Dietary restriction collection
+* Mobile-first responsive design
+* Integration with ASP.NET Core Web API backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Architecture
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
++---------------------+
+|     React App       |
+|   (Frontend UI)     |
++----------+----------+
+           |
+           | HTTPS Requests
+           |
+           v
++---------------------+
+| ASP.NET Core API    |
+|   (Backend Service) |
++---------------------+
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Overview
 
-### `npm run eject`
+Full-stack RSVP application built with React, ASP.NET Core, and SQL Server. Designed to provide a streamlined RSVP process for wedding guests while minimizing manual data entry and tracking for event organizers.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Send me a message for a demo or walkthrough.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+##### Developed by Nick Webb
