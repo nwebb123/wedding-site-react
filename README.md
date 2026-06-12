@@ -14,12 +14,10 @@ This project was built using React and follows a mobile-first, responsive design
 ## Technologies Used
 
 * React
-* JavaScript
-* CSS
+* Tailwind CSS
 * ASP.NET Core Web API
 * Azure App Service
 * Netlify
-* GitHub Actions
 
 ## Features
 
